@@ -42,16 +42,11 @@ except requests.exceptions.JSONDecodeError:
 
 print(f"Fetching data for player: {player_name}...")
 api_url = "https://kog.tw/api.php"
-# payload = {
-#     "nonce": nonce,
-#     "type": "players",
-#     "player": player_name,
-#     "tz": "America/New_York"
-# }
 payload = {
     "nonce": nonce,
-    "type": "maps",
-    "map": "001"
+    "type": "players",
+    "player": player_name,
+    "tz": "America/New_York"
 }
 
 data_res = session.post(api_url, json=payload)
