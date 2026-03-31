@@ -15,11 +15,9 @@ session.headers.update({
     "Sec-Fetch-Site": "same-origin"
 })
 
-print("Establishing session...")
 session.get("https://kog.tw/")
 
 url = "https://kog.tw/get.php?p=ranks&p=ranks"
-print("Fetching Top 200 global ranks...")
 response = session.get(url)
 
 if response.status_code == 200:
@@ -27,7 +25,6 @@ if response.status_code == 200:
         print("Failed: The server returned an empty response.")
         sys.exit(1)
 
-    print("Parsing global leaderboard...")
     soup = BeautifulSoup(response.text, 'html.parser')
 
     top_players = []
@@ -68,17 +65,11 @@ if response.status_code == 200:
                     "points": points
                 })
     top_players = sorted(top_players, key=lambda x: x['rank'])
-
-    print(f"\nSuccessfully scraped {len(top_players)} players!")
-
-    # Print the top 10 as a preview
-    # print("\nPreview of Top 10:")
-    # print(json.dumps(top_players[:10], indent=4))
+    print(json.dumps(top_players))
 
     # Save the full list to a file if you want
     # with open("global_top_200.json", "w", encoding="utf-8") as f:
     #     json.dump(top_players, f, indent=4, ensure_ascii=False)
-    #     print("\nSaved all 200 players to 'global_top_200.json'!")
 
 else:
     print(f"Failed to fetch global ranks. Status code: {response.status_code}")

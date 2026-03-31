@@ -4,8 +4,7 @@ import sys
 import json
 
 if len(sys.argv) < 2:
-    print("Usage: python get_map_top100.py <map_id>")
-    print("Example: python get_map_top100.py 001")
+    print("Usage: python kog_map_top100.py <map_name>")
     sys.exit(1)
 
 map_id = sys.argv[1]
@@ -22,11 +21,9 @@ session.headers.update({
     "Sec-Fetch-Site": "same-origin"
 })
 
-print("Establishing session...")
 session.get("https://kog.tw/")
 
 url = f"https://kog.tw/get.php?p=maps&p=maps&map={map_id}"
-print(f"Fetching Top 100 for Map: {map_id}...")
 
 response = session.get(url)
 
@@ -35,7 +32,6 @@ if response.status_code == 200:
         print("Failed: The server returned an empty response. We might be blocked.")
         sys.exit(1)
 
-    print("Parsing leaderboard...")
     soup = BeautifulSoup(response.text, 'html.parser')
 
     rows = soup.find_all('tr')
@@ -58,11 +54,9 @@ if response.status_code == 200:
                     "score": score,
                     "player": player_name
                 })
-    print(f"\nSuccessfully scraped {len(leaderboard)} players from map {map_id}!")
-    # print("\nPreview of Top 5:")
-    # print(json.dumps(leaderboard[:5], indent=4))
+    print(json.dumps(leaderboard))
 
-    # If you want to save it to a file, uncomment these lines:
+    # If you want to save it to a file, uncomment these lines
     # with open(f"map_{map_id}_top100.json", "w") as f:
     #     json.dump(leaderboard, f, indent=4)
 

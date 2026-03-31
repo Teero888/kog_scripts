@@ -3,7 +3,7 @@ import json
 import sys
 
 if len(sys.argv) < 2:
-    print("Usage: python test_kog_get.py <player_name>")
+    print("Usage: python kog_player.py <player_name>")
     sys.exit(1)
 
 player_name = sys.argv[1]
@@ -21,10 +21,8 @@ session.headers.update({
     "Sec-Fetch-Site": "same-origin"
 })
 
-print("Visiting main page to establish session...")
 session.get("https://kog.tw/", headers={"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"})
 
-print("Fetching token...")
 token_url = "https://kog.tw/api.php?type=csrf-token"
 token_res = session.get(token_url)
 
@@ -34,13 +32,11 @@ if not token_res.text.strip():
 
 try:
     nonce = token_res.json().get("nonce")
-    print(f"Got nonce: {nonce}")
 except requests.exceptions.JSONDecodeError:
     print("Failed to decode JSON. Raw response:")
     print(token_res.text[:500])
     sys.exit(1)
 
-print(f"Fetching data for player: {player_name}...")
 api_url = "https://kog.tw/api.php"
 payload = {
     "nonce": nonce,
@@ -50,11 +46,12 @@ payload = {
 }
 
 data_res = session.post(api_url, json=payload)
-
 if data_res.status_code == 200:
     try:
-        print("Success! Raw Data:")
-        print(json.dumps(data_res.json(), indent=2))
+        response_dict = data_res.json()
+        if "data" in response_dict and isinstance(response_dict["data"], str):
+            response_dict["data"] = json.loads(response_dict["data"])
+        print(json.dumps(response_dict))
     except requests.exceptions.JSONDecodeError:
         print("Failed to decode POST response. Raw text:")
         print(data_res.text[:500])

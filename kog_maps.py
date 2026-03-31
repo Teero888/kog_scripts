@@ -15,18 +15,15 @@ session.headers.update({
     "Sec-Fetch-Site": "same-origin"
 })
 
-print("Visiting main page to establish session...")
 session.get("https://kog.tw/")
 
 url = "https://kog.tw/get.php?p=maps"
-print("Fetching map data...")
 response = session.get(url)
 
 if response.status_code == 200:
     if not response.text.strip():
         print("Failed: The server returned an empty response. We are being blocked.")
         sys.exit(1)
-    print("Successfully fetched HTML! Parsing...")
     soup = BeautifulSoup(response.text, 'html.parser')
     map_cards = soup.find_all('div', class_='card')
     if len(map_cards) == 0:
@@ -65,7 +62,7 @@ if response.status_code == 200:
 
         all_maps.append(map_data)
 
-    print(f"\nFinished! Scraped a total of {len(all_maps)} maps.")
+    print(all_maps)
 
 else:
     print(f"Failed to fetch maps. Status code: {response.status_code}")
