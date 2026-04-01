@@ -62,7 +62,7 @@ if response.status_code == 200:
 
         all_maps.append(map_data)
 
-    print(all_maps)
+    print(json.dumps(all_maps, ensure_ascii=False))
 
 else:
     print(f"Failed to fetch maps. Status code: {response.status_code}")
