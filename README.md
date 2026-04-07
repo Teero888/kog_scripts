@@ -4,7 +4,7 @@ This repository contains a few useful scripts to extract data from [kog.tw](http
 - The top200 players - [kog_top200.py](https://github.com/Teero888/kog_scripts/blob/master/kog_top200.py)
 - The top100 ranks of any map - [kog_map_top100.py](https://github.com/Teero888/kog_scripts/blob/master/kog_map_top100.py)
 - Last updated Player info of any player - [kog_player.py](https://github.com/Teero888/kog_scripts/blob/master/kog_player.py)
-- Updated Player info of any player - [kog_player_latest.py](https://github.com/Teero888/kog_scripts/blob/master/kog_player_latest.py)
+- Update the Player info of any player - [kog_player_update.py](https://github.com/Teero888/kog_scripts/blob/master/kog_player_update.py)
 - Map Info of every map - [kog_maps.py](https://github.com/Teero888/kog_scripts/blob/master/kog_maps.py)
 - The last 40 finishes made - [kog_recent_finishes.py](https://github.com/Teero888/kog_scripts/blob/master/kog_recent_finishes.py)
 
